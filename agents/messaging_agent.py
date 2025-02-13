@@ -8,7 +8,6 @@ from agents.agent import Agent
 # Uncomment the Twilio lines if you wish to use Twilio
 
 DO_TEXT = True
-DO_PUSH = False
 
 class MessagingAgent(Agent):
 
@@ -17,22 +16,16 @@ class MessagingAgent(Agent):
 
     def __init__(self):
         """
-        Set up this object to either do push notifications via Pushover,
-        or SMS via Twilio,
-        whichever is specified in the constants
+        Set up this object to either do push notifications SMS via Twilio,
         """
         self.log(f"Messaging Agent is initializing")
         if DO_TEXT:
-            account_sid = os.getenv('TWILIO_ACCOUNT_SID', 'your-sid-if-not-using-env')
-            auth_token = os.getenv('TWILIO_AUTH_TOKEN', 'your-auth-if-not-using-env')
-            self.me_from = os.getenv('TWILIO_FROM', 'your-phone-number-if-not-using-env')
-            self.me_to = os.getenv('MY_PHONE_NUMBER', 'your-phone-number-if-not-using-env')
+            account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+            auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+            self.me_from = os.getenv('TWILIO_FROM')
+            self.me_to = os.getenv('MY_PHONE_NUMBER')
             self.client = Client(account_sid, auth_token)
             self.log("Messaging Agent has initialized Twilio")
-        if DO_PUSH:
-            self.pushover_user = os.getenv('PUSHOVER_USER', 'your-pushover-user-if-not-using-env')
-            self.pushover_token = os.getenv('PUSHOVER_TOKEN', 'your-pushover-user-if-not-using-env')
-            self.log("Messaging Agent has initialized Pushover")
 
     def message(self, text):
         """
@@ -45,21 +38,6 @@ class MessagingAgent(Agent):
           to=self.me_to
         )
 
-    def push(self, text):
-        """
-        Send a Push Notification using the Pushover API
-        """
-        self.log("Messaging Agent is sending a push notification")
-        conn = http.client.HTTPSConnection("api.pushover.net:443")
-        conn.request("POST", "/1/messages.json",
-          urllib.parse.urlencode({
-            "token": self.pushover_token,
-            "user": self.pushover_user,
-            "message": text,
-            "sound": "cashregister"
-          }), { "Content-type": "application/x-www-form-urlencoded" })
-        conn.getresponse()
-
     def alert(self, opportunity: Opportunity):
         """
         Make an alert about the specified Opportunity
@@ -71,8 +49,6 @@ class MessagingAgent(Agent):
         text += opportunity.deal.url
         if DO_TEXT:
             self.message(text)
-        if DO_PUSH:
-            self.push(text)
         self.log("Messaging Agent has completed")
         
     
