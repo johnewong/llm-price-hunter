@@ -1,6 +1,6 @@
 # PriceHunter
 
-PriceHunter is a multi-agent system that autonomously hunts for online deals by analyzing product descriptions, estimating fair prices, and identifying significant discounts. It combines advanced LLMs with traditional ML techniques to deliver robust deal detection, price estimation, and user notifications via WhatsApp, alongside a browser-based UI built with Gradio.
+PriceHunter is a multi-agent system that autonomously hunts for online deals by analyzing product descriptions, estimating fair prices, and identifying significant discounts. It combines QLoRA fine-tuned LLMs, GPT-4o with RAG and agents to deliver automatic deal detection, price estimation, and user notifications via WhatsApp, alongside a browser-based UI built with Gradio.
 
 ---
 
