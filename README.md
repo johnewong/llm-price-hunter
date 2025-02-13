@@ -94,3 +94,6 @@ PriceHunter is a multi-agent system that autonomously hunts for online deals by 
                ▼
        [Messaging Agent]
 ```
+## Demo
+<img width="1919" alt="SCR-20250213-klzy" src="https://github.com/user-attachments/assets/cd085258-a46f-4ad1-9971-e9e516d6a6f6" />
+
